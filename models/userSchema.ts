@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
-interface IUser {
+export interface IUser {
   name: string;
   username: string;
   password: string;
@@ -10,7 +10,7 @@ interface IUser {
 
 const userSchema = new Schema<IUser>(
   {
-    username: { type: String, unique: true, required: true },
+    username: { type: String, required: true, index: true, unique: true},
     name: { type: String, required: true },
     password: { type: String, required: true },
     listOfFriends: { type: Array },
@@ -19,3 +19,6 @@ const userSchema = new Schema<IUser>(
 );
 
 export const User = mongoose.model("User", userSchema);
+User.createIndexes();
+
+// export default User;

@@ -1,7 +1,11 @@
 import express from 'express';
 const user = express.Router();
-import { User } from "../models/userSchema";
+import {User} from "../models/userSchema";
 const bcrypt = require("bcrypt");
+const alphaReg = new RegExp("^[a-zA-Z0-9_-]+$");
+
+const checkAlpha = (str: string) => alphaReg.test(str);
+const saltRounds = 10;
 
 //routes
 //seed
@@ -12,14 +16,14 @@ user.get('/seed', async (req, res) => {
 			name: "admin",
 			password: bcrypt.hashSync(
 				"123",
-				bcrypt.genSaltSync(10)
+				bcrypt.genSaltSync(saltRounds)
 			)
 		},{
 			username: "user_03",
 			name: "Brandon",
 			password: bcrypt.hashSync(
 				"098",
-				bcrypt.genSaltSync(10)
+				bcrypt.genSaltSync(saltRounds)
 			),
 			listOfFriends: ["user_01"]
 		}, {
@@ -27,7 +31,7 @@ user.get('/seed', async (req, res) => {
 			name: "QY",
 			password: bcrypt.hashSync(
 				"456",
-				bcrypt.genSaltSync(10)
+				bcrypt.genSaltSync(saltRounds)
 			),
 			listOfFriends: ["user_01"]
 		}, {
@@ -35,7 +39,7 @@ user.get('/seed', async (req, res) => {
 			name: "Sonakshi",
 			password: bcrypt.hashSync(
 				"789",
-				bcrypt.genSaltSync(10)
+				bcrypt.genSaltSync(saltRounds)
 			),
 			listOfFriends: ["user_02", "user_03"]
 		}])
@@ -60,22 +64,46 @@ user.get("/:id", async (req,res) => {
 });
 
 user.post("/new", async (req, res) => {
-	res.send("api for creating new user");
+	const {username, name, password} = req.body;
 	try {
-
+		if ( checkAlpha(username) && checkAlpha(name) && checkAlpha(password)){
+			const hashPassword = bcrypt.hashSync(password,saltRounds);
+			const newUser = await User.create({
+				username: username,
+				name: name,
+				password: hashPassword,
+			})
+			res.status(201).send(newUser);
+		} else {
+			throw new Error("Validation failed");
+		}
 	} catch (error){
-		res.status(400).send("Failed to create" + error);
+		res.status(400).send("Failed to create, " + error);
 	}
-	
 });
 
 user.post("/login", async (req, res) => {
+	const {username, password} = req.body;
 	try {
-
-	} catch (error){
-
+		const search = await User.find({ username: username }, { password: 1 });
+    if (search.length === 0) {
+      throw new Error("User not found!");
+    } else if(bcrypt.compareSync(password, search[0].password)){
+		req.session.username = username;
+      res.sendStatus(200);
+    } else {
+		throw new Error("Login fail!")
 	}
-	res.send("api for logging in");
+ } catch (error){
+		console.log(error);
+		res.status(400).send(`${error}`);
+	}
+});
+
+user.get("/logout/:username", (req, res) => {
+		if(req.session.username === req.params.username){
+			req.session.destroy(() => res.sendStatus(200));
+		} else res.status(200).send("No session found");
 });
 
 user.put("/reset", async (req, res) => {
@@ -88,6 +116,7 @@ user.put("/reset", async (req, res) => {
 })
 
 user.delete("/delete", async (req,res) => {
+	//check they are logged in first.
 // user themselves can delete their account
 try {
 
@@ -99,3 +128,4 @@ try {
 
 
 module.exports = user;
+

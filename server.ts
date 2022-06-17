@@ -1,4 +1,5 @@
 import express from 'express';
+const session = require("express-session");
 require('dotenv').config();
 const app = express();
 const port = process.env.PORT;
@@ -19,6 +20,13 @@ mongoose.connection.once('open', () => {
 
 //middleware
 app.use(express.json());
+app.use(
+	session({
+	  secret: "canvas",
+	  resave: false,
+	  saveUninitialized: true,
+	  // cookie: { secure: true }
+	}));
 app.use('/api/user', user);
 app.use('/api/posts', posts);
 app.use('/api/comment', comment);
@@ -30,3 +38,9 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
 	console.log(`express+typescript listening on port ${port}`);
 });
+
+declare module "express-session"{
+export interface SessionData {
+	username: string;
+}
+}
