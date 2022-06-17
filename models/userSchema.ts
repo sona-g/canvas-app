@@ -1,13 +1,21 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
-const userSchema = new Schema({
-	username: { type: String, required: true },
-	name: { type: String, required: true },
-	password: { type: String, required: true },
-	listOfFriends: { type: Array },
-});
+interface IUser {
+  name: string;
+  username: string;
+  password: string;
+  listOfFriends?: string[];
+}
 
-const User = mongoose.model('Schema', userSchema);
+const userSchema = new Schema<IUser>(
+  {
+    username: { type: String, unique: true, required: true },
+    name: { type: String, required: true },
+    password: { type: String, required: true },
+    listOfFriends: { type: Array },
+  },
+  { timestamps: true }
+);
 
-module.exports = User;
+export const User = mongoose.model("User", userSchema);
