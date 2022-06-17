@@ -18,9 +18,10 @@ mongoose.connection.once('open', () => {
 });
 
 //middleware
-app.use('/user', user);
-app.use('/posts', posts);
-app.use('/comment', comment);
+app.use(express.json());
+app.use('/api/user', user);
+app.use('/api/posts', posts);
+app.use('/api/comment', comment);
 
 app.get('/', (req, res) => {
 	res.send('test');

@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "views-install": "cd views && npm install --production=false",
+    "views-build": "cd views && npm run build",
+    "heroku-postbuild": "npm run views-install && npm run views-build"
   },
   "keywords": [],
   "author": "",
