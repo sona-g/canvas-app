@@ -1,12 +1,26 @@
-const { application } = require('express');
 const express = require('express');
 const comment = express.Router();
+const Comment = require('../models/commentSchema');
 
 //routes
 
 //seed
-comment.get('/seed', (req, res) => {
-	res.send('seed');
+comment.get('/seed', async (req, res) => {
+	try {
+		const newComment = await Comment.create([
+			{
+				id: 1,
+				postId: 1,
+				ownerOfComment: 1,
+				commentText: 'test123test',
+				noOfLikes: 1,
+				usersLikedList: [],
+			},
+		]);
+		res.redirect('/');
+	} catch (error) {
+		console.log(error);
+	}
 });
 
 //index - get (display a list of all the comments)
