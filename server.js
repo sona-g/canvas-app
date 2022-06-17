@@ -18,6 +18,7 @@ mongoose.connection.once('open', () => {
 });
 
 //middleware
+app.use(express.json());
 app.use('/user', user);
 app.use('/posts', posts);
 app.use('/comment', comment);
