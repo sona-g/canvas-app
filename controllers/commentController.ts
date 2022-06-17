@@ -1,5 +1,5 @@
 const { application } = require('express');
-const express = require('express');
+import express from 'express';
 const comment = express.Router();
 
 //routes

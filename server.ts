@@ -1,4 +1,4 @@
-const express = require('express');
+import express from 'express';
 require('dotenv').config();
 const app = express();
 const port = process.env.PORT;
@@ -28,5 +28,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, () => {
-	console.log(`express listening on port ${port}`);
+	console.log(`express+typescript listening on port ${port}`);
 });
