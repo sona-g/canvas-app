@@ -18,6 +18,7 @@ mongoose.connection.once('open', () => {
 });
 
 //middleware
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/api/user', user);
 app.use('/api/posts', posts);
