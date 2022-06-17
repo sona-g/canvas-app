@@ -7,7 +7,7 @@ const postSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	Description: { type: String, required: true },
+	description: { type: String, required: true },
 	image: String,
 	numOfLikes: Number,
 	ownerOfPost: { type: String },

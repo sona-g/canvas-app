@@ -1,7 +1,31 @@
 const express = require('express');
 const posts = express.Router();
+const Post = require('../models/postSchema');
 
 //routes
+
+//seed
+posts.get('/seed', async (req, res) => {
+	try {
+		const newPost = await Post.create([
+			{
+				objectId: 1,
+				title: 'I love Italy',
+				description: 'Italy is my life. I love Italy more than my wife. Fuyoh',
+				image:
+					'https://nehraconsultancy.com/wp-content/uploads/2020/12/amalfi-italy-shutterstock_759048709_bdda191300.jpg',
+				numOfLikes: 3,
+				ownerOfPost: 'Brandon Yeo',
+				commentsArray: [{ QingYun: 'Woah nice!' }, { Sonakshi: 'Wowow' }],
+				private: false,
+				usersLikedList: ['QingYun', 'Sonakshi'],
+			},
+		]);
+		res.send(newPost);
+	} catch (error) {
+		console.log(error);
+	}
+});
 
 //index - get (display a list of all the posts)
 posts.get('/', (req, res) => {

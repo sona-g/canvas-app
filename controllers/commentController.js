@@ -11,13 +11,21 @@ comment.get('/seed', async (req, res) => {
 			{
 				id: 1,
 				postId: 1,
-				ownerOfComment: 1,
+				ownerOfComment: 'QingYun',
 				commentText: 'test123test',
 				noOfLikes: 1,
-				usersLikedList: [],
+				usersLikedList: ['Brandon Yeo'],
+			},
+			{
+				id: 2,
+				postId: 2,
+				ownerOfComment: 'Brandon Yeo',
+				commentText: 'PAGGY PAGGY BOI',
+				noOfLikes: 100,
+				usersLikedList: ['QingYun', 'Sonakshi'],
 			},
 		]);
-		res.redirect('/');
+		res.send(newComment);
 	} catch (error) {
 		console.log(error);
 	}
