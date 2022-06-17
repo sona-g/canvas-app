@@ -1,10 +1,11 @@
 {
   "name": "canvas-app",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -12,9 +13,23 @@
   "dependencies": {
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
-    "mongoose": "^6.3.8"
+    "express-session": "^1.17.3",
+    "i": "^0.3.7",
+    "mongoose": "^6.3.8",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "eslint": "^8.17.0",
+    "eslint-plugin-react": "^7.30.0",
     "nodemon": "^2.0.16"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/branyzp/canvas-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/branyzp/canvas-app/issues"
+  },
+  "homepage": "https://github.com/branyzp/canvas-app#readme",
+  "description": ""
 }
