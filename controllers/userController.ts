@@ -3,7 +3,7 @@ const user = express.Router();
 import {User} from "../models/userSchema";
 const bcrypt = require("bcrypt");
 const alphaReg = new RegExp("^[a-zA-Z0-9_-]+$");
-import { OK, StatusCodes } from 'http-status-codes';
+import { StatusCodes } from 'http-status-codes';
 
 const checkAlpha = (str: string) => alphaReg.test(str);
 const saltRounds = 10;
