@@ -1,4 +1,5 @@
 const express = require('express');
+const { StatusCodes } = require('http-status-codes');
 const posts = express.Router();
 const Post = require('../models/postSchema');
 
@@ -6,10 +7,10 @@ const Post = require('../models/postSchema');
 
 //seed
 posts.get('/seed', async (req, res) => {
+	await Post.deleteMany({});
 	try {
 		const newPost = await Post.create([
 			{
-				objectId: 1,
 				title: 'I love Italy',
 				description: 'Italy is my life. I love Italy more than my wife. Fuyoh',
 				image:
@@ -28,23 +29,41 @@ posts.get('/seed', async (req, res) => {
 });
 
 //index - get (display a list of all the posts)
-posts.get('/', (req, res) => {
-	res.send('this is the /posts index');
+posts.get('/', async (req, res) => {
+	try {
+		const allPosts = await Post.find({});
+		res.send(allPosts);
+	} catch (error) {
+		res.send(error);
+	}
 });
 
 //new - get (show form to make new post)
-posts.get('/new', (req, res) => {
-	res.send('this is the new post form');
+posts.get('/new', async (req, res) => {
+	res.send('NEW POST FORM GOES HERE');
 });
 
 //create - post (add new blog to database, then redirect)
-posts.post('/', (req, res) => {
-	res.send('add new post');
+posts.post('/', async (req, res) => {
+	if (req.body.numOfLikes < 0) {
+		res.status(418).send("Likes can't be negative");
+	}
+	try {
+		const newPost = await Post.create(req.body);
+		res.status(StatusCodes.CREATED).send({ status: 'success', data: newPost });
+	} catch (error) {
+		res.send(error);
+	}
 });
 
 //show - get (show info about 1 particular post)
-posts.get('/:id', (req, res) => {
-	res.send('show 1 post');
+posts.get('/:id', async (req, res) => {
+	try {
+		const selectedPost = await Post.findById(req.params.id);
+		res.send(selectedPost);
+	} catch (error) {
+		res.send(error);
+	}
 });
 
 //edit - get (show edit form for 1 post)
@@ -53,13 +72,23 @@ posts.get('/:id/edit', (req, res) => {
 });
 
 //update - put (update a particular post, then redirect)
-posts.put('/:id', (req, res) => {
-	res.send('update the post, then redirect');
+posts.put('/:id', async (req, res) => {
+	try {
+		const updatePost = await Post.findByIdAndUpdate(req.params.id, req.body);
+		res.send(updatePost);
+	} catch (error) {
+		res.send(error);
+	}
 });
 
 //destroy - delete (delete a post then redirect)
-posts.delete('/:id', (req, res) => {
-	res.send('delete');
+posts.delete('/:id', async (req, res) => {
+	try {
+		const deletePost = await Post.findByIdAndDelete(req.params.id);
+		res.send(deletePost);
+	} catch (error) {
+		res.send(error);
+	}
 });
 
 module.exports = posts;

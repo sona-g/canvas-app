@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const commentSchema = new Schema({
-	id: { type: Number, required: true },
+	//Comment postId linked to the objectId of post
+	//that the comment is meant to fall under
 	postId: { type: Number, required: true },
 	ownerOfComment: { type: String, required: true },
 	commentText: { type: String },

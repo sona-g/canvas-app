@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const postSchema = new Schema({
-	objectId: { type: Number, required: true },
 	title: {
 		type: String,
 		required: true,
