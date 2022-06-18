@@ -23,6 +23,7 @@ app.use(express.json());
 app.use(
 	session({
 	  secret: "canvas",
+	  name:'username',
 	  resave: false,
 	  saveUninitialized: true,
 	  // cookie: { secure: true }
