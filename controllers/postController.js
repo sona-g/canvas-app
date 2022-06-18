@@ -1,4 +1,5 @@
 const express = require('express');
+const { StatusCodes } = require('http-status-codes');
 const posts = express.Router();
 const Post = require('../models/postSchema');
 
@@ -44,9 +45,12 @@ posts.get('/new', async (req, res) => {
 
 //create - post (add new blog to database, then redirect)
 posts.post('/', async (req, res) => {
+	if (req.body.numOfLikes < 0) {
+		res.status(418).send("Likes can't be negative");
+	}
 	try {
 		const newPost = await Post.create(req.body);
-		res.send(newPost);
+		res.status(StatusCodes.CREATED).send({ status: 'success', data: newPost });
 	} catch (error) {
 		res.send(error);
 	}
