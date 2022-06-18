@@ -6,10 +6,10 @@ const Comment = require('../models/commentSchema');
 
 //seed
 comment.get('/seed', async (req, res) => {
+	await Comment.deleteMany({});
 	try {
 		const newComment = await Comment.create([
 			{
-				id: 1,
 				postId: 1,
 				ownerOfComment: 'QingYun',
 				commentText: 'test123test',
@@ -17,7 +17,6 @@ comment.get('/seed', async (req, res) => {
 				usersLikedList: ['Brandon Yeo'],
 			},
 			{
-				id: 2,
 				postId: 2,
 				ownerOfComment: 'Brandon Yeo',
 				commentText: 'PAGGY PAGGY BOI',
@@ -32,8 +31,13 @@ comment.get('/seed', async (req, res) => {
 });
 
 //index - get (display a list of all the comments)
-comment.get('/', (req, res) => {
-	res.send('this is the /comment index');
+comment.get('/', async (req, res) => {
+	try {
+		const allComments = await Comment.find({});
+		res.send(allComments);
+	} catch (error) {
+		res.send(error);
+	}
 });
 
 //new - get (show form to make new comments)
@@ -42,13 +46,23 @@ comment.get('/new', (req, res) => {
 });
 
 //create - post (add new comment to database, then redirect)
-comment.post('/', (req, res) => {
-	res.send('add new comment');
+comment.post('/', async (req, res) => {
+	try {
+		const newComment = await Comment.create(req.body);
+		res.send(newComment);
+	} catch (error) {
+		res.send(error);
+	}
 });
 
 //show - get (show info about 1 particular post)
-comment.get('/:id', (req, res) => {
-	res.send('show 1 comment');
+comment.get('/:id', async (req, res) => {
+	try {
+		selectedComment = await Comment.findById(req.params.id);
+		res.send(selectedComment);
+	} catch (error) {
+		res.send(error);
+	}
 });
 
 //edit - get (show edit form for 1 post)
@@ -57,13 +71,26 @@ comment.get('/:id/edit', (req, res) => {
 });
 
 //update - put (update a particular post, then redirect)
-comment.put('/:id', (req, res) => {
-	res.send('update the comment, then redirect');
+comment.put('/:id', async (req, res) => {
+	try {
+		const updateComment = await Comment.findByIdAndUpdate(
+			req.params.id,
+			req.body
+		);
+		res.send(updateComment);
+	} catch (error) {
+		res.send(error);
+	}
 });
 
 //destroy - delete (delete a comment then redirect)
-comment.delete('/:id', (req, res) => {
-	res.send('delete comment');
+comment.delete('/:id', async (req, res) => {
+	try {
+		const deleteComment = await Comment.findByIdAndDelete(req.params.id);
+		res.send(deleteComment);
+	} catch (error) {
+		res.send(error);
+	}
 });
 
 module.exports = comment;

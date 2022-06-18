@@ -6,10 +6,10 @@ const Post = require('../models/postSchema');
 
 //seed
 posts.get('/seed', async (req, res) => {
+	await Post.deleteMany({});
 	try {
 		const newPost = await Post.create([
 			{
-				objectId: 1,
 				title: 'I love Italy',
 				description: 'Italy is my life. I love Italy more than my wife. Fuyoh',
 				image:
@@ -70,7 +70,7 @@ posts.get('/:id/edit', (req, res) => {
 //update - put (update a particular post, then redirect)
 posts.put('/:id', async (req, res) => {
 	try {
-		const updatePost = await Post.findByIdAndUpdate(req.params.id);
+		const updatePost = await Post.findByIdAndUpdate(req.params.id, req.body);
 		res.send(updatePost);
 	} catch (error) {
 		res.send(error);
@@ -80,8 +80,8 @@ posts.put('/:id', async (req, res) => {
 //destroy - delete (delete a post then redirect)
 posts.delete('/:id', async (req, res) => {
 	try {
-		const removePost = await Post.findByIdAndDelete(req.params.id);
-		res.send(removePost);
+		const deletePost = await Post.findByIdAndDelete(req.params.id);
+		res.send(deletePost);
 	} catch (error) {
 		res.send(error);
 	}
