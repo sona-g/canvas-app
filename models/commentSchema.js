@@ -6,8 +6,8 @@ const commentSchema = new Schema({
 	//that the comment is meant to fall under
 	postId: { type: Number, required: true },
 	ownerOfComment: { type: String, required: true },
-	commentText: { type: String },
-	noOfLikes: { type: Number, required: true },
+	commentText: String,
+	numOfLikes: Number,
 	usersLikedList: { type: Array, required: true },
 });
 

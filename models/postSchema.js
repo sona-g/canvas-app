@@ -9,9 +9,9 @@ const postSchema = new Schema({
 	description: { type: String, required: true },
 	image: String,
 	numOfLikes: Number,
-	ownerOfPost: { type: String },
+	ownerOfPost: { type: String, required: true },
 	commentsArray: { type: Array },
-	private: { type: Boolean },
+	private: { type: Boolean, required: true },
 	usersLikedList: { type: Array },
 });
 
