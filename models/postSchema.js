@@ -8,12 +8,12 @@ const postSchema = new Schema({
 	},
 	description: { type: String, required: true },
 	image: String,
-	numOfLikes: Number,
-	ownerOfPost: { type: String },
-	commentsArray: { type: Array },
-	private: { type: Boolean },
-	usersLikedList: { type: Array },
+	ownerOfPost: { type: Schema.Types.ObjectId, ref: 'User'},
+	commentsArray: [{ type: Schema.Types.ObjectId, ref: 'Comment', default: []}],
+	usersLikedList: [{ type: Schema.Types.ObjectId, ref: 'User' , default: []}],
 });
+
+postSchema.virtual('numOfLikes').get(function () {return this.usersLikedList.length});
 
 const Post = mongoose.model('Post', postSchema);
 

@@ -31,7 +31,9 @@ posts.get('/seed', async (req, res) => {
 //index - get (display a list of all the posts)
 posts.get('/', async (req, res) => {
 	try {
-		const allPosts = await Post.find({});
+		const allPosts = await Post.find({}).
+		populate('usersLikedList').
+		populate('ownerOfPost');
 		res.send(allPosts);
 	} catch (error) {
 		res.send(error);
