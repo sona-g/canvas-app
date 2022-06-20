@@ -2,7 +2,6 @@ const express = require('express');
 const { StatusCodes } = require('http-status-codes');
 const posts = express.Router();
 const Post = require('../models/postSchema');
-const {User} = require('../models/userSchema');
 
 //routes
 
