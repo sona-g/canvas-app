@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+// const Comment = require('./commentSchema');
 
 const postSchema = new Schema({
 	title: {
@@ -8,11 +9,9 @@ const postSchema = new Schema({
 	},
 	description: { type: String, required: true },
 	image: String,
-	numOfLikes: Number,
-	ownerOfPost: { type: String, required: true },
-	commentsArray: { type: Array },
-	private: { type: Boolean, required: true },
-	usersLikedList: { type: Array },
+	ownerOfPost: { type: Schema.Types.ObjectId, ref: 'User' },
+	// comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+	usersLikedList: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 });
 
 const Post = mongoose.model('Post', postSchema);
