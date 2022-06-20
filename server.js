@@ -5,7 +5,7 @@ const port = process.env.PORT;
 const mongoose = require('mongoose');
 
 //controllers
-const user = require('./controllers/userController');
+const {user} = require('./controllers/userController');
 const posts = require('./controllers/postController');
 const comment = require('./controllers/commentController');
 
