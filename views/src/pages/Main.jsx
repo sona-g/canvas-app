@@ -18,7 +18,7 @@ const Main = () => {
                     <div className="card" style={{ width: '18rem' }}>
                         <div className="card-body">
                             <h5 className="card-title" style={{ textAlign: "left" }}>{post.ownerOfPost.name}</h5>
-                            <Link to="posts/:id" style={{ color: 'inherit', textDecoration: 'inherit'}}>
+                            <Link to="/posts/:id" style={{ color: 'inherit', textDecoration: 'inherit'}}>
                             <img src={post.image} className="card-img-top" alt={post.title} /></Link>
                             <div className="card-text" style={{ justifyContent: "space-between" }}>
                                 <p style={{ textAlign: "left", fontWeight: "bold", marginBottom: "2%" }}>{post.usersLikedList.length} Likes</p>
