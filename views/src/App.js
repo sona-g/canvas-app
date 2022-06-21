@@ -5,6 +5,7 @@ import Post from './pages/Post';
 import './App.css';
 import {PostProvider} from './components/PostContext';
 import { LoginProvider } from './components/LoginContext';
+import NewPost from './pages/NewPost';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />}/>
         <Route path="/posts" element={ <Main />} />
+        <Route path="/posts/new" element={<NewPost />} />
         <Route path="/posts/:id" element={<Post />} />
       </Routes>
       </BrowserRouter>

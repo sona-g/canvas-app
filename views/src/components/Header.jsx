@@ -21,8 +21,8 @@ const Header = () => {
 			<Link className="NavBarLink" to="/posts">
 				Main
 			</Link>
-			<Link className="NavBarLink" to="/posts/:id">
-				selectedPost placeholder
+			<Link className="NavBarLink" to="/posts/new">
+				Create New Post
 			</Link>
 
 			<input

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+// const User = require('./userSchema');
 
 const commentSchema = new Schema({
 	ownerOfComment: { type: String, required: true },
