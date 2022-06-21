@@ -4,6 +4,7 @@ import Main from './pages/Main';
 import Login from './pages/Login';
 import Post from './pages/Post';
 import './App.css';
+import NewPost from './pages/NewPost';
 
 function App() {
 	return (
@@ -13,7 +14,7 @@ function App() {
 				<Routes>
 					<Route path="/user" element={<Login />} />
 					<Route path="/posts" element={<Main />} />
-					<Route path="/posts/:id" element={<Post />} />
+					<Route path="/posts/new" element={<NewPost />} />
 				</Routes>
 			</BrowserRouter>
 		</div>
