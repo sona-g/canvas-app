@@ -11,15 +11,19 @@ posts.get('/seed', async (req, res) => {
 	try {
 		const newPost = await Post.create([
 			{
-				title: 'I love Italy',
-				description: 'Italy is my life. I love Italy more than my wife. Fuyoh',
+				title: 'I love siambu',
+				description: 'Siambu for wife, Siambu for life',
 				image:
 					'https://nehraconsultancy.com/wp-content/uploads/2020/12/amalfi-italy-shutterstock_759048709_bdda191300.jpg',
-				numOfLikes: 3,
-				ownerOfPost: 'Brandon Yeo',
-				commentsArray: [{ QingYun: 'Woah nice!' }, { Sonakshi: 'Wowow' }],
-				private: false,
-				usersLikedList: ['QingYun', 'Sonakshi'],
+				ownerOfPost: '62b01665c2e0e54058b6c492',
+				// comments: [
+				// 	{ '62b01665c2e0e54058b6c490': 'Woah nice!' },
+				// 	{ '62b01665c2e0e54058b6c491': 'Wowow' },
+				// ],
+				usersLikedList: [
+					'62b01665c2e0e54058b6c490',
+					'62b01665c2e0e54058b6c491',
+				],
 			},
 		]);
 		res.status(StatusCodes.CREATED).send({ status: 'success', data: newPost });
@@ -50,12 +54,7 @@ posts.get('/', async (req, res) => {
 // 	}
 // });
 
-//new - get (show form to make new post)
-posts.get('/new', async (req, res) => {
-	res.send('new post form goes here');
-});
-
-//create - post (add new blog to database, then redirect)
+//create - post (add new post to database, then redirect)
 posts.post('/', async (req, res) => {
 	if (req.body.numOfLikes < 0) {
 		res.status(StatusCodes.FORBIDDEN).send("Likes can't be negative");
@@ -85,11 +84,6 @@ posts.get('/:id', async (req, res) => {
 	} catch (error) {
 		res.send(error);
 	}
-});
-
-//edit - get (show edit form for 1 post)
-posts.get('/:id/edit', (req, res) => {
-	res.send('show edit form of 1 post');
 });
 
 //update - put (update a particular post, then redirect)

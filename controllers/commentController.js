@@ -55,11 +55,6 @@ comment.get('/', async (req, res) => {
 // 	}
 // });
 
-//new - get (show form to make new comments)
-comment.get('/new', (req, res) => {
-	res.send('new comment form goes here');
-});
-
 //create - post (add new comment to database, then redirect)
 comment.post('/', async (req, res) => {
 	if (req.body.numOfLikes < 0) {
@@ -92,11 +87,6 @@ comment.get('/:id', async (req, res) => {
 	} catch (error) {
 		res.send(error);
 	}
-});
-
-//edit - get (show edit form for 1 comment)
-comment.get('/:id/edit', (req, res) => {
-	res.send('show edit form of 1 comment');
 });
 
 //update - put (update a particular comment, then redirect)
