@@ -3,13 +3,12 @@ const { Schema } = mongoose;
 // const User = require('./userSchema');
 
 const commentSchema = new Schema({
-	//Comment postId linked to the objectId of post
-	//that the comment is meant to fall under through populate
-	_id: Schema.Types.ObjectId,
-	ownerOfComment: { type: Schema.Types.ObjectId,  },
+	ownerOfComment: { type: String, required: true },
 	commentText: String,
+	usersLikedList: [{ type: Schema.Types.ObjectId, ref: 'User' , default: []}],
 });
 
+commentSchema.virtual('numOfLikes').get(function () {return this.usersLikedList.length});
 const Comment = mongoose.model('Comment', commentSchema);
 
-module.exports = Comment;
+module.exports = {Comment,commentSchema};
