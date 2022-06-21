@@ -9,6 +9,7 @@ const session = require("express-session");
 const {user} = require('./controllers/userController');
 const posts = require('./controllers/postController');
 const comment = require('./controllers/commentController');
+const seed = require('./seed');
 
 //connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
@@ -32,6 +33,11 @@ app.use(
 app.use('/api/user', user);
 app.use('/api/posts', posts);
 app.use('/api/comment', comment);
+
+app.get('/masterSeed', (req,res) => {
+	seed();
+	res.send('seed');
+})
 
 app.get('/', (req, res) => {
 	res.send('test');
