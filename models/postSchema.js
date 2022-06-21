@@ -19,3 +19,8 @@ postSchema.virtual('numOfLikes').get(function () {return this.usersLikedList.len
 const Post = mongoose.model('Post', postSchema);
 
 module.exports = Post;
+
+//If child cannot exist without parent, then should be a document.
+//If object can exist by itself, can have a collection.
+
+// Or the flow of the data.

@@ -2,6 +2,7 @@ const express = require('express');
 const { StatusCodes } = require('http-status-codes');
 const posts = express.Router();
 const Post = require('../models/postSchema');
+const User = require('../models/userSchema');
 
 //routes
 
@@ -37,6 +38,22 @@ posts.get('/', async (req, res) => {
 		res.status(StatusCodes.ACCEPTED).send(allPosts);
 	} catch (error) {
 		res.status(StatusCodes.BAD_REQUEST).send(error);
+	}
+});
+
+//get posts for logged in user
+posts.get('/user/:username', async (req, res) => {
+	//:username to be removed, to get from session instead.
+	try {
+		const username = req.params.username;
+		const userObj = await User.findOne({username: username}, {listOfFriends: 1});
+		const searchList = [...userObj.listOfFriends, userObj._id];
+		const allPosts = await Post.find({username: {$in: searchList}});
+		// console.log(allPosts);
+		res.send(allPosts);
+	} catch (err){
+		console.log(err);
+		res.status(StatusCodes.BAD_REQUEST).send(err);
 	}
 });
 
