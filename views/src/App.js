@@ -4,10 +4,13 @@ import Login from './pages/Login';
 import Post from './pages/Post';
 import './App.css';
 import {PostProvider} from './components/PostContext';
+import { LoginProvider } from './components/LoginContext';
+
 
 function App() {
   return (
     <div className="App">
+      <LoginProvider>
       <PostProvider>
       <BrowserRouter>
       <Routes>
@@ -17,6 +20,7 @@ function App() {
       </Routes>
       </BrowserRouter>
       </PostProvider>
+      </LoginProvider>
     </div>
   );
 }

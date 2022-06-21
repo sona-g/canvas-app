@@ -12,11 +12,11 @@ const Post = () => {
                 return (
                     <div class="card" style={{ width: '50%' }}>
                         <div class="card-body">
-                        <h5 class="card-title" style={{ textAlign: "left" }}>{post.ownerOfPost}</h5>
+                        <h5 class="card-title" style={{ textAlign: "left" }}>{post.ownerOfPost.name}</h5>
                         <img src={post.image} class="card-img-top" alt={post.title} />
                         <div className="card-text" style={{ justifyContent: "space-between" }}>
                                 <p style={{ textAlign: "left", fontWeight: "bold", marginBottom: "2%" }}>Liked by  {post.usersLikedList[0]}   and {post.usersLikedList.length - 1} more</p>
-                                <p style={{ textAlign: "left" }}><span style={{ fontWeight: "bold" }}>{post.ownerOfPost}</span>:    {post.description}</p> 
+                                <p style={{ textAlign: "left" }}><span style={{ fontWeight: "bold" }}>{post.ownerOfPost.name}</span>:    {post.description}</p> 
                             </div>
                         </div>
                     </div>

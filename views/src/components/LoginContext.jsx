@@ -3,29 +3,10 @@ import { createContext, useState } from "react";
 const loginContext = createContext();
 
 export function LoginProvider({children}) {
-    const [user, setUser] = useState("");
-
-    const handleSubmit = event => {
-        event.preventDefault();
-        const info = {
-            username: event.target.elements.username.value,
-            password: event.target.elements.password.value,
-        }
-        console.log(info)
-    
-        fetch("/api/posts/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(info)
-        })
-            .then((response) => response.json())
-            .then((data) => setUser(data));
-    };
-
+    const [user, setUser] = useState();
+   
     return (
-        <loginContext.Provider value={{ user, handleSubmit }}>
+        <loginContext.Provider value={{ user, setUser }}>
             {children}
         </loginContext.Provider>
     )
