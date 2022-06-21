@@ -8,7 +8,7 @@ const postSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	description: { type: String, required: true },
+	description: { type: String },
 	image: String,
 	ownerOfPost: {type: Schema.Types.ObjectId, ref: 'User'},
 	commentsArray: [commentSchema],
