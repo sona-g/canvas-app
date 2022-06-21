@@ -46,6 +46,7 @@ userRoute.get('/seed', async (req, res) => {
 		}])
 		res.status(StatusCodes.CREATED).send(seed);
 	} catch (err){
+		console.log(err);
 		res.status(StatusCodes.BAD_REQUEST).send(err);
 	}
 });
