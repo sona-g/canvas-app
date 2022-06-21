@@ -1,76 +1,55 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Form, Button } from 'react-bootstrap';
+import { useContext } from 'react';
+import loginContext from '../components/LoginContext';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-    const [choice, setChoice] = useState('');
+    const {user, setUser} = useContext(loginContext);
+    console.log(user);
+    let navigate = useNavigate();
 
-    const handleClick = event => setChoice(event.target.value);
+    const handleSubmit = event => {
+        event.preventDefault();
+        const userInfo = {
+            username: event.target.elements.formGroupEmail.value,
+            password: event.target.elements.formGroupPassword.value,
+        }
+        console.log(userInfo)
+    
+        fetch("/api/user/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(userInfo)
+        })
+            .then((response) => response.json())
+            .then((data) => setUser(data));
 
-    switch (choice){
-        case '': {
-            return (
-                <>
-                <button value="login" onClick={handleClick}>LOGIN</button>
-                <button value="signup" onClick={handleClick}>SIGN UP</button>
-                </>
-            );
-        }
-        case "login": {
-            return (
-                <>
-                <header>Login Here!</header>
-                <form>
-                    <fieldset>
-                        <label htmlFor='username'>Username: </label>
-                        <input type="text" id="username" placeholder='Username'/>
-                        <label htmlFor='password'>Password: </label>
-                        <input type="password" id="password"  placeholder='Password'/>
-                        <input type="submit" value="ENTER" />
-                    </fieldset>
-                </form>
-                <a onClick={()=> setChoice("forgot")}>Forgot password</a>
-                <br></br>
-                <a onClick={()=> setChoice("")}>Return</a>
-                </>
-            )
-        }
-        case "signup": {
-            return (
-                <>
-                <header>Join us!</header>
-                <form>
-                    <fieldset>
-                        <label htmlFor='username'>Username: </label>
-                        <input type="text" id="username" placeholder='Username'/>
-                        <label htmlFor='name'>Name: </label>
-                        <input type="text" id="name" placeholder='Name'/>
-                        <label htmlFor='password'>Password: </label>
-                        <input type="password" id="password"  placeholder='Password'/>
-                        <input type="submit" value="ENTER" />
-                    </fieldset>
-                </form>
-                <a onClick={()=> setChoice("")}>Return</a>
-                </>
-            )
-        }
-        case "forgot": {
-            return (
-                <>
-                <header>Resetting password</header>
-                <form>
-                    <fieldset>
-                        <label htmlFor='username'>Username: </label>
-                        <input type="text" id="username" placeholder='Username'/>
-                        <label htmlFor='password'>Password: </label>
-                        <input type="password" id="password"  placeholder='Password'/>
-                        <input type="submit" value="RESET" />
-                    </fieldset>
-                </form>
-                <a onClick={()=> setChoice("")}>Return</a>
-                </>
+            navigate("/posts", { replace: true })
+    };
 
-            )
-        }
-    }
+    return (
+        <div style={{ marginLeft: '25%', marginTop: '2%', width: '50%' }}>
+            <Form onSubmit={handleSubmit} style={{ margin: '7%' }}>
+            <img style={{maxWidth: '40%'}} src= {require("../assets/logo_transparent.png")} alt="canvas" />
+            <p></p>
+                <h3>LOG IN</h3>
+                <Form.Group className="mb-3" controlId="formGroupEmail">
+                    <Form.Control type="text" placeholder="Enter email or username" required={true}/>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formGroupPassword">
+                    <Form.Control type="password" placeholder="Password" required={true}/>
+                </Form.Group>
+                 <Button className="d-grid gap-2 col-12 mx-auto" variant="warning" size="lg" type="submit">LOGIN</Button>
+                <p></p>
+                    <Button className="d-grid gap-2 col-12 mx-auto" variant="warning" size="lg" type="submit">
+                    CREATE ACCOUNT
+                </Button>
+            </Form>
+        </div>
+    );
 };
 
 export default Login;
