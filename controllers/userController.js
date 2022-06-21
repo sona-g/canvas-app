@@ -50,13 +50,13 @@ userRoute.post('/login', async (req, res) => {
 	try {
 		const search = await User.find({ username: username }, { password: 1 });
     if (search.length === 0) {
-      throw new Error("User not found!");
+      throw new Error('User not found!');
     } else if(bcrypt.compareSync(password, search[0].password)){
 		req.session.username = username;
 		//no body, so will have console error.
       res.sendStatus(StatusCodes.OK);
     } else {
-		throw new Error("Login fail!")
+		throw new Error('Login fail!')
 	}
  } catch (error){
 		console.log(error);
