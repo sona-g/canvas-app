@@ -30,7 +30,7 @@ export function PostProvider({children}) {
             });
     };
     return (
-        <postContext.Provider value={{posts, handleLike}}>
+        <postContext.Provider value={{posts, setPosts, handleLike}}>
             {children}
         </postContext.Provider>
     )
