@@ -75,7 +75,9 @@ posts.post('/', async (req, res) => {
 posts.get('/:id', async (req, res) => {
 	const { id } = req.params;
 	try {
-		const selectedPost = await Post.findById(id);
+		const selectedPost = await Post.findById(id).
+		populate('usersLikedList','name').
+		populate('ownerOfPost','name');
 		if (selectedPost === null) {
 			res
 				.status(StatusCodes.NOT_FOUND)
