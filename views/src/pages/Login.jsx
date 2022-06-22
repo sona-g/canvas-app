@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useContext } from 'react';
 import loginContext from '../components/LoginContext';
 import { useNavigate } from 'react-router-dom';
+import { StatusCodes } from 'http-status-codes';
+
 
 const Login = () => {
     const {user, setUser} = useContext(loginContext);
+    const [loginFail, setLoginFail] = useState(false);
     console.log(user);
     let navigate = useNavigate();
 
@@ -24,10 +27,13 @@ const Login = () => {
             },
             body: JSON.stringify(userInfo)
         })
-            .then((response) => response.json())
-            .then((data) => setUser(data));
-
-            navigate("/posts", { replace: true })
+            .then((response) => {
+                if(response.status === StatusCodes.OK){
+                    setUser(response.json());
+                    setLoginFail(false);
+                    navigate("/posts", { replace: true })
+                }
+            }).catch(setLoginFail(true));
     };
 
     return (
@@ -37,12 +43,16 @@ const Login = () => {
             <p></p>
                 <h3>LOG IN</h3>
                 <Form.Group className="mb-3" controlId="formGroupEmail">
-                    <Form.Control type="text" placeholder="Enter email or username" required={true}/>
+                    <Form.Control type="text" placeholder="Enter email or username" required={true}
+                    className={loginFail? "is-invalid" : ""}/>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formGroupPassword">
-                    <Form.Control type="password" placeholder="Password" required={true}/>
+                    <Form.Control type="password" placeholder="Password" required={true}
+                    className={loginFail? "is-invalid" : ""}/>
                 </Form.Group>
-                 <Button className="d-grid gap-2 col-12 mx-auto" variant="warning" size="lg" type="submit">LOGIN</Button>
+                 <Button className="d-grid gap-2 col-12 mx-auto" variant="warning" size="lg" type="submit">
+                    {loginFail? "LOGIN FAILED, PLEASE RETRY" : "LOGIN"}
+                </Button>
                 <p></p>
                     <Button className="d-grid gap-2 col-12 mx-auto" variant="warning" size="lg" type="submit">
                     CREATE ACCOUNT
