@@ -9,21 +9,21 @@ const User = require('../models/userSchema');
 //index - get (display a list of all the posts)
 posts.get('/', async (req, res) => {
 	try {
-		const {search} = req.body;
-		if(search === undefined){
-		const allPosts = await Post.find({}).
-		populate('usersLikedList','name').
-		populate('ownerOfPost','name');
-		res.status(StatusCodes.ACCEPTED).send(allPosts);
-	} else {
-		const filteredPost = await Post.find({
-      $or: [
-        { title: { $regex: search, $options: "i" } },
-        { description: { $regex: search, $options: "i" }},
-      ],
-    });
-	res.status(StatusCodes.ACCEPTED).send(filteredPost);
-	}
+		const { search } = req.body;
+		if (search === undefined) {
+			const allPosts = await Post.find({})
+				.populate('usersLikedList', 'name')
+				.populate('ownerOfPost', 'name');
+			res.status(StatusCodes.ACCEPTED).send(allPosts);
+		} else {
+			const filteredPost = await Post.find({
+				$or: [
+					{ title: { $regex: search, $options: 'i' } },
+					{ description: { $regex: search, $options: 'i' } },
+				],
+			});
+			res.status(StatusCodes.ACCEPTED).send(filteredPost);
+		}
 	} catch (error) {
 		res.status(StatusCodes.BAD_REQUEST).send(error);
 	}
@@ -34,12 +34,15 @@ posts.get('/user/:username', async (req, res) => {
 	//:username to be removed, to get from session instead.
 	try {
 		const username = req.params.username;
-		const userObj = await User.findOne({username: username}, {listOfFriends: 1});
+		const userObj = await User.findOne(
+			{ username: username },
+			{ listOfFriends: 1 }
+		);
 		const searchList = [...userObj.listOfFriends, userObj._id];
-		const allPosts = await Post.find({username: {$in: searchList}});
+		const allPosts = await Post.find({ username: { $in: searchList } });
 		// console.log(allPosts);
 		res.status(StatusCodes.ACCEPTED).send(allPosts);
-	} catch (err){
+	} catch (err) {
 		console.log(err);
 		res.status(StatusCodes.BAD_REQUEST).send(err);
 	}
