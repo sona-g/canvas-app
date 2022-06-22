@@ -1,21 +1,22 @@
 import React from 'react';
 // import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { MdFavoriteBorder, MdFavorite } from 'react-icons/md';
+import { MdFavoriteBorder, MdFavorite, MdDeleteOutline } from 'react-icons/md';
 import postContext from '../components/PostContext';
 import { useContext } from 'react';
 import Header from '../components/Header';
 
 const Main = () => {
-	const { posts, handleLike } = useContext(postContext);
+	const { posts, handleLike, handleDelete } = useContext(postContext);
 	//    console.log(posts);
+
 	return (
 		<>
 			<Header />
 			<div className="postContainer" style={{ display: 'flex' }}>
 				{posts.map((post) => {
 					return (
-						<div className="card" style={{ width: '18rem' }} key={post._id}>
+						<div className="card" style={{ width: '18rem' }} key={post?._id}>
 							<div className="card-body">
 								<h5 className="card-title" style={{ textAlign: 'left' }}>
 									{post?.ownerOfPost?.name}
@@ -57,6 +58,7 @@ const Main = () => {
 											className="btn btn-light"
 											onClick={() => handleLike(post._id)}
 										>
+										
 											<MdFavoriteBorder />
 										</button>
 									</p>

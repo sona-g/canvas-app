@@ -49,6 +49,9 @@ const Header = () => {
 			<Link className="NavBarLink" to="/posts/new">
 				Create Post
 			</Link>
+			<Link className="NavBarLink" to="/myposts">
+				My Posts
+			</Link>
 			{/* <h3>Hello, {user[0]?.name}</h3> */}
 		</div>
 	);

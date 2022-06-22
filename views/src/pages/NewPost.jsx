@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 const NewPost = () => {
 	let navigate = useNavigate();
-	const { user } = useContext(loginContext);
+	const { user, setUser } = useContext(loginContext);
 	const [imageSrc, setImageSrc] = useState(null);
 	const [title, setTitle] = useState(null);
 	const [desc, setDesc] = useState(null);
@@ -32,7 +32,9 @@ const NewPost = () => {
 				console.log(data);
 			});
 		navigate('/posts', { replace: true });
-		window.location.reload();
+		//need to re-render with REACT
+		setUser(...user);
+		//this setUser change state doesn't force a re-render for some reason
 	};
 
 	return (
