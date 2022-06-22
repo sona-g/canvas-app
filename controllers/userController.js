@@ -9,41 +9,6 @@ const checkAlpha = (str) => alphaReg.test(str);
 const saltRounds = 10;
 const isAuthenticated = (username, req) => req.session.username === username;
 //routes
-//seed
-userRoute.get('/seed', async (req, res) => {
-	await User.deleteMany({});
-	try {
-		const seed = await User.create([
-			{
-				username: 'admin',
-				name: 'admin',
-				password: bcrypt.hashSync('123', bcrypt.genSaltSync(saltRounds)),
-			},
-			{
-				username: 'user_03',
-				name: 'Brandon',
-				password: bcrypt.hashSync('098', bcrypt.genSaltSync(saltRounds)),
-				listOfFriends: ['user_01'],
-			},
-			{
-				username: 'user_02',
-				name: 'QY',
-				password: bcrypt.hashSync('456', bcrypt.genSaltSync(saltRounds)),
-				listOfFriends: ['user_01'],
-			},
-			{
-				username: 'user_01',
-				name: 'Sonakshi',
-				password: bcrypt.hashSync('789', bcrypt.genSaltSync(saltRounds)),
-				listOfFriends: ['user_02', 'user_03'],
-			},
-		]);
-		res.status(StatusCodes.CREATED).send(seed);
-	} catch (err) {
-		console.log(err);
-		res.status(StatusCodes.BAD_REQUEST).send(err);
-	}
-});
 
 //Retrieve Single user and all details.
 userRoute.get('/:id', async (req, res) => {
@@ -85,16 +50,16 @@ userRoute.post('/login', async (req, res) => {
 	const { username, password } = req.body;
 	try {
 		const search = await User.find({ username: username });
-    if (search.length === 0) {
-      throw new Error('User not found!');
-    } else if(bcrypt.compareSync(password, search[0].password)){
-		req.session.username = username;
-		//no body, so will have console error.
-      res.status(StatusCodes.OK).send(search);
-    } else {
-		throw new Error('Login fail!')
-	}
- } catch (error){
+		if (search.length === 0) {
+			throw new Error('User not found!');
+		} else if (bcrypt.compareSync(password, search[0].password)) {
+			req.session.username = username;
+			//no body, so will have console error.
+			res.status(StatusCodes.OK).send(search);
+		} else {
+			throw new Error('Login fail!');
+		}
+	} catch (error) {
 		console.log(error);
 		res.status(StatusCodes.BAD_REQUEST).send(`${error}`);
 	}

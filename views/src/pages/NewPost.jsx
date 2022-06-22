@@ -24,7 +24,7 @@ const NewPost = () => {
 				title,
 				description: desc,
 				image: imageSrc,
-				ownerOfPost: user[0]._id,
+				ownerOfPost: user?.[0]?._id,
 			}),
 		})
 			.then((response) => response.json())
@@ -32,7 +32,7 @@ const NewPost = () => {
 				console.log(data);
 			});
 		navigate('/posts', { replace: true });
-		// window.location.reload();
+		window.location.reload();
 	};
 
 	return (
