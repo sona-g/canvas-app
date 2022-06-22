@@ -16,7 +16,7 @@ const NewPost = () => {
 		e.preventDefault();
 		//pass down data collected in front-end to the back-end
 		console.log('NewPost: Submit');
-		console.log('newPost', user.username);
+		console.log('newPost', user);
 		fetch('/api/posts', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
@@ -24,12 +24,12 @@ const NewPost = () => {
 				title,
 				description: desc,
 				image: imageSrc,
-				// ownerOfPost: user,
+				// ownerOfPost: user._id,
 			}),
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data);
+				console.log(data.data);
 			});
 		// navigate('/posts', { replace: true });
 		// window.location.reload();

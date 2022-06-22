@@ -7,6 +7,7 @@ import { useContext } from 'react';
 const Header = () => {
 	const { user } = useContext(loginContext);
 	const [searchQuery, setSearchQuery] = useState('');
+	
 
 	const handleSearch = (e) => {
 		setSearchQuery(e.target.value);
