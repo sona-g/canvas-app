@@ -5,34 +5,6 @@ const Comment = require('../models/commentSchema');
 
 //routes
 
-//seed
-comment.get('/seed', async (req, res) => {
-	await Comment.deleteMany({});
-	try {
-		const newComment = await Comment.create([
-			{
-				postId: 1,
-				ownerOfComment: 'QingYun',
-				commentText: 'test123test',
-				numOfLikes: 1,
-				usersLikedList: ['Brandon Yeo'],
-			},
-			{
-				postId: 2,
-				ownerOfComment: 'Brandon Yeo',
-				commentText: 'PAGGY PAGGY BOI',
-				numOfLikes: 100,
-				usersLikedList: ['QingYun', 'Sonakshi'],
-			},
-		]);
-		res
-			.status(StatusCodes.CREATED)
-			.send({ status: 'success', data: newComment });
-	} catch (error) {
-		console.log(error);
-	}
-});
-
 //index - get (display a list of all the comments)
 comment.get('/', async (req, res) => {
 	try {

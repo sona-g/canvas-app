@@ -2,45 +2,46 @@ const express = require('express');
 const { StatusCodes } = require('http-status-codes');
 const posts = express.Router();
 const Post = require('../models/postSchema');
+const User = require('../models/userSchema');
 
 //routes
 
-//seed
-posts.get('/seed', async (req, res) => {
-	await Post.deleteMany({});
+//index - get (display a list of all the posts)
+posts.get('/', async (req, res) => {
 	try {
-		const newPost = await Post.create([
-			{
-				title: 'I love siambu',
-				description: 'Siambu for wife, Siambu for life',
-				image:
-					'https://nehraconsultancy.com/wp-content/uploads/2020/12/amalfi-italy-shutterstock_759048709_bdda191300.jpg',
-				ownerOfPost: '62b01665c2e0e54058b6c492',
-				// comments: [
-				// 	{ '62b01665c2e0e54058b6c490': 'Woah nice!' },
-				// 	{ '62b01665c2e0e54058b6c491': 'Wowow' },
-				// ],
-				usersLikedList: [
-					'62b01665c2e0e54058b6c490',
-					'62b01665c2e0e54058b6c491',
-				],
-			},
-		]);
-		res.status(StatusCodes.CREATED).send({ status: 'success', data: newPost });
+		const {search} = req.body;
+		if(search === undefined){
+		const allPosts = await Post.find({}).
+		populate('usersLikedList','name').
+		populate('ownerOfPost','name');
+		res.status(StatusCodes.ACCEPTED).send(allPosts);
+	} else {
+		const filteredPost = await Post.find({
+      $or: [
+        { title: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" }},
+      ],
+    });
+	res.status(StatusCodes.ACCEPTED).send(filteredPost);
+	}
 	} catch (error) {
 		res.status(StatusCodes.BAD_REQUEST).send(error);
 	}
 });
 
-//index - get (display a list of all the posts)
-posts.get('/', async (req, res) => {
+//get posts for logged in user
+posts.get('/user/:username', async (req, res) => {
+	//:username to be removed, to get from session instead.
 	try {
-		const allPosts = await Post.find({}).
-		populate('usersLikedList','name').
-		populate('ownerOfPost','name');
+		const username = req.params.username;
+		const userObj = await User.findOne({username: username}, {listOfFriends: 1});
+		const searchList = [...userObj.listOfFriends, userObj._id];
+		const allPosts = await Post.find({username: {$in: searchList}});
+		// console.log(allPosts);
 		res.status(StatusCodes.ACCEPTED).send(allPosts);
-	} catch (error) {
-		res.status(StatusCodes.BAD_REQUEST).send(error);
+	} catch (err){
+		console.log(err);
+		res.status(StatusCodes.BAD_REQUEST).send(err);
 	}
 });
 
