@@ -1,12 +1,12 @@
 import React from 'react';
 import postContext from '../components/PostContext';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Header from '../components/Header';
 import { useParams } from 'react-router-dom';
 
 const Post = () => {
-    const { posts, setPosts } = useContext(postContext);
-    // const [posts, setSinglePost] = useState({});
+    // const { posts, setPosts } = useContext(postContext);
+    const [posts, setPosts] = useState({});
     const { id } = useParams();
 
     useEffect(() => {
@@ -25,7 +25,10 @@ const Post = () => {
                     <h5 className="card-title" style={{ textAlign: "left" }}>{posts?.ownerOfPost?.name}</h5>
                     <img id={posts._id} src={posts.image} className="card-img-top" alt={posts.title} />
                     <div className="card-text" style={{ justifyContent: "space-between" }}>
-                        <p style={{ textAlign: "left", fontWeight: "bold", marginBottom: "2%" }}>Liked by  {posts?.usersLikedList?.[0]?.name}   and {posts?.usersLikedList?.length - 1} more</p>
+                        <p style={{ textAlign: "left", fontWeight: "bold", marginBottom: "2%" }}>
+                        {posts?.usersLikedList?.length > 1 ? `Liked by ${posts?.usersLikedList?.[0]?.name} and ${posts?.usersLikedList?.length - 1} more` : 
+                        posts?.usersLikedList?.length === 1 ? `Liked by ${posts?.usersLikedList?.[0]?.name}`
+                        : ""}</p>
                         <p style={{ textAlign: "left" }}><span style={{ fontWeight: "bold" }}>{posts?.ownerOfPost?.name}</span>:    {posts.description}</p>
                     </div>
                 </div>

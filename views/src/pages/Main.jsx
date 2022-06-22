@@ -5,10 +5,46 @@ import { MdFavoriteBorder, MdFavorite } from 'react-icons/md';
 import postContext from '../components/PostContext';
 import { useContext } from 'react';
 import Header from '../components/Header';
+import loginContext from '../components/LoginContext';
+
 
 const Main = () => {
-	const { posts, handleLike } = useContext(postContext);
-	//    console.log(posts);
+	const { posts, setPosts} = useContext(postContext);
+	const {user} = useContext(loginContext);
+
+	const isPostLikedByUser = post => {
+		// post.usersLikedList.forEach(ele => console.log("list", ele._id));
+		// console.log("user", user[0]._id); 
+		if(user[0]._id === undefined) {return false}
+		else return post.usersLikedList.some(ele => ele._id === user[0]._id);
+	}
+
+	const replacePost = (post,index) =>{
+		posts.splice(index,1,post);
+		setPosts([...posts]);
+		fetch(`/api/posts/${post._id}`, {
+			method: "PUT",
+			headers: { 'Content-Type': 'application/json'},
+			body: JSON.stringify({
+				usersLikedList: post.usersLikedList,
+			})
+		}).then((response, error) => {
+			if(error) console.log("replace post", error);
+		})
+	};
+
+	const handleLike = (post) => {
+    const postIndex = posts.findIndex(ele => ele._id === post._id);
+    if (isPostLikedByUser(post)) {
+      const index = post.usersLikedList.findIndex((ele) => ele._id === user[0]._id);
+      post.usersLikedList.splice(index,1);
+    } else {
+		post.usersLikedList.push({name: user[0].name, _id: user[0]._id});
+	} 
+	replacePost(post,postIndex);
+  };
+
+//   console.log(user);
 	return (
 		<>
 			<Header />
@@ -55,9 +91,8 @@ const Main = () => {
 										<button
 											type="button"
 											className="btn btn-light"
-											onClick={() => handleLike(post._id)}
-										>
-											<MdFavoriteBorder />
+											onClick={() => handleLike(post)}>
+											{isPostLikedByUser(post) ? <MdFavorite/> : <MdFavoriteBorder />}
 										</button>
 									</p>
 								</div>

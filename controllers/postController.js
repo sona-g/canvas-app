@@ -99,7 +99,7 @@ posts.put('/:id', async (req, res) => {
 		res.status(StatusCodes.FORBIDDEN).send("Likes can't be negative");
 	} else {
 		try {
-			const updatePost = await Post.findByIdAndUpdate(id, req.body);
+			const updatePost = await Post.findByIdAndUpdate(id, req.body, {new: true});
 			if (updatePost === null) {
 				res
 					.status(StatusCodes.NOT_FOUND)

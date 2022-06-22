@@ -21,16 +21,16 @@ export function PostProvider({children}) {
         ]);
     };
 
-    const handleLike = (id) => {
-        fetch(`/api/posts/${id}`, { method: "PUT" })
-            .then((response) => response.json())
-            .then((data) => {
-                // console.log(data);
-                replacePost(data)
-            });
-    };
+    // const handleLike = (id) => {
+    //     fetch(`/api/posts/${id}`, { method: "PUT" })
+    //         .then((response) => response.json())
+    //         .then((data) => {
+    //             // console.log(data);
+    //             replacePost(data)
+    //         });
+    // };
     return (
-        <postContext.Provider value={{posts, setPosts, handleLike}}>
+        <postContext.Provider value={{posts, setPosts}}>
             {children}
         </postContext.Provider>
     )
