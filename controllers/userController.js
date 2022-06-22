@@ -54,7 +54,7 @@ userRoute.post('/login', async (req, res) => {
     } else if(bcrypt.compareSync(password, search[0].password)){
 		req.session.username = username;
 		//no body, so will have console error.
-      res.sendStatus(StatusCodes.OK);
+      res.status(StatusCodes.OK).send({status: "success"});
     } else {
 		throw new Error('Login fail!')
 	}
