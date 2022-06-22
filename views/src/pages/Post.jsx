@@ -9,7 +9,7 @@ const Post = () => {
 		<>
 			<Header />
 			<div>
-				{posts.map((post) => {
+				{posts?.map((post) => {
 					return (
 						<div className="card" style={{ width: '50%' }}>
 							<div className="card-body">

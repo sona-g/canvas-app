@@ -8,12 +8,12 @@ import Header from '../components/Header';
 
 const Main = () => {
 	const { posts, handleLike } = useContext(postContext);
-	console.log(posts);
+	// console.log(posts);
 	return (
 		<>
 			<Header />
 			<div className="postContainer" style={{ display: 'flex' }}>
-				{posts.map((post) => {
+				{posts?.map((post) => {
 					return (
 						<div className="card" style={{ width: '18rem' }}>
 							<div className="card-body">

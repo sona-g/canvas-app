@@ -8,7 +8,7 @@ import { StatusCodes } from 'http-status-codes';
 const Login = () => {
 	const { user, setUser } = useContext(loginContext);
 	const [loginFail, setLoginFail] = useState(false);
-	console.log(user);
+
 	let navigate = useNavigate();
 
 	const handleSubmit = (event) => {
@@ -16,28 +16,45 @@ const Login = () => {
 		const userInfo = {
 			username: event.target.elements.formGroupEmail.value,
 			password: event.target.elements.formGroupPassword.value,
-			_id: 'abc123',
 		};
-		console.log(userInfo);
-		setUser(userInfo);
-		navigate('/posts', { replace: true });
-
-		// 	fetch('/api/user/login', {
-		// 		method: 'POST',
-		// 		headers: {
-		// 			'Content-Type': 'application/json',
-		// 		},
-		// 		body: JSON.stringify(userInfo),
-		// 	})
-		// 		.then((response) => {
-		// 			if (response.status === StatusCodes.OK) {
-		// 				setUser(response.json());
-		// 				setLoginFail(false);
-		// 				navigate('/posts', { replace: true });
-		// 			}
-		// 		})
-		// 		.catch(setLoginFail(true));
+		// console.log(userInfo);
+		// setUser(userInfo);
+		// navigate('/posts', { replace: true });
+		fetch('/api/user/login', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(userInfo),
+		})
+			.then((response) => {
+				if (response.status === StatusCodes.OK) {
+					return response.json();
+				}
+			})
+			.then((data) => {
+				setUser(data);
+				setLoginFail(false);
+				navigate('/posts', { replace: true });
+			})
+			.catch(setLoginFail(true));
 	};
+	// 	fetch('/api/user/login', {
+	// 		method: 'POST',
+	// 		headers: {
+	// 			'Content-Type': 'application/json',
+	// 		},
+	// 		body: JSON.stringify(userInfo),
+	// 	})
+	// 		.then((response) => {
+	// 			if (response.status === StatusCodes.OK) {
+	// 				setUser(response.json());
+	// 				setLoginFail(false);
+	// 				navigate('/posts', { replace: true });
+	// 			}
+	// 		})
+	// 		.catch(setLoginFail(true));
+	// };
 
 	return (
 		<div style={{ marginLeft: '25%', marginTop: '2%', width: '50%' }}>

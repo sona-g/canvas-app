@@ -24,22 +24,16 @@ const NewPost = () => {
 				title,
 				description: desc,
 				image: imageSrc,
-				// ownerOfPost: user._id,
+				ownerOfPost: user[0]._id,
 			}),
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data.data);
+				console.log(data);
 			});
-		// navigate('/posts', { replace: true });
+		navigate('/posts', { replace: true });
 		// window.location.reload();
 	};
-
-	// fetch('/api/posts/')
-	// 	.then((response) => response.json)
-	// 	.then((data) => setPost(data));
-	// console.log(post);
-	// })
 
 	return (
 		<>
