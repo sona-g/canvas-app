@@ -15,11 +15,11 @@ const Main = () => {
         <div className="postContainer" style={{ display: "flex" }}>
             {posts.map((post) => {
                 return (
-                    <div className="card" style={{ width: '18rem' }}>
+                    <div className="card" style={{ width: '18rem' }} key={post._id}>
                         <div className="card-body">
                             <h5 className="card-title" style={{ textAlign: "left" }}>{post.ownerOfPost.name}</h5>
-                            <Link to="/posts/:id" style={{ color: 'inherit', textDecoration: 'inherit'}}>
-                            <img src={post.image} className="card-img-top" alt={post.title} /></Link>
+                            <Link to={`/posts/${post._id}`} style={{ color: 'inherit', textDecoration: 'inherit'}}>
+                            <img id={post._id} src={post.image} className="card-img-top" alt={post.title} /></Link>
                             <div className="card-text" style={{ justifyContent: "space-between" }}>
                                 <p style={{ textAlign: "left", fontWeight: "bold", marginBottom: "2%" }}>{post.usersLikedList.length} Likes</p>
                                 <p style={{ textAlign: "left" }}><span style={{ fontWeight: "bold" }}>{post.ownerOfPost.name}</span>:    {post.title}</p> 
