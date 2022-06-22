@@ -8,14 +8,14 @@ import Header from '../components/Header';
 
 const Main = () => {
     const {posts, handleLike} = useContext(postContext);
-   console.log(posts);
+//    console.log(posts);
     return (
         <>
         <Header />
         <div className="postContainer" style={{ display: "flex" }}>
             {posts.map((post) => {
                 return (
-                    <div className="card" style={{ width: '18rem' }}>
+                    <div className="card" style={{ width: '18rem' }} key={post._id}>
                         <div className="card-body">
                             <h5 className="card-title" style={{ textAlign: "left" }}>{post.ownerOfPost.name}</h5>
                             <Link to="/posts/:id" style={{ color: 'inherit', textDecoration: 'inherit'}}>

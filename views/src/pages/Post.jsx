@@ -10,7 +10,7 @@ const Post = () => {
             <Header />
             {posts.map((post) => {
                 return (
-                    <div className="card" style={{ width: '50%' }}>
+                    <div className="card" style={{ width: '50%' }} key={post._id}>
                         <div className="card-body">
                         <h5 className="card-title" style={{ textAlign: "left" }}>{post.ownerOfPost.name}</h5>
                         <img src={post.image} className="card-img-top" alt={post.title} />
