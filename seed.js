@@ -92,23 +92,23 @@ module.exports = async function seed() {
 
     const seedComments = await Comment.create([
         {
-            ownerOfComment: seedUsers[3]._id,
+            ownerOfComment: seedUsers[3].name,
             commentText: "OH WOWWOWOWOWOW!!!"
         },
         {
-            ownerOfComment: seedUsers[2]._id,
+            ownerOfComment: seedUsers[2].name,
             commentText: "coolio milio!"
         },
         {
-            ownerOfComment:seedUsers[1]._id,
+            ownerOfComment:seedUsers[1].name,
             commentText: "awesome shit!"
         },
         {
-            ownerOfComment: seedUsers[3]._id,
+            ownerOfComment: seedUsers[3].name,
             commentText: "i Lurve this!"
         },
         {
-            ownerOfComment: seedUsers[1]._id,
+            ownerOfComment: seedUsers[1].name,
             commentText: "HAHAHAHA"
         }
     ])
