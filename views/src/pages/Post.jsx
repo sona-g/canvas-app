@@ -23,7 +23,7 @@ const Post = () => {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
-                ownerOfComment: user?.[0]?._id,
+                ownerOfComment: user?.[0]?.name,
 				commentText: comment
 			}),
 		})
@@ -35,6 +35,7 @@ const Post = () => {
         
     };
     //setPosts(...posts)
+	console.log(user?.[0]?.name)
     console.log(comment);
 	console.log(posts?.commentsArray);
 	return (
