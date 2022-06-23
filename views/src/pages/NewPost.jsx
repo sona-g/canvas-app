@@ -43,7 +43,7 @@ const NewPost = () => {
 		//race condition
 	};
 
-	return (
+return (
 		<>
 			<Header />
 

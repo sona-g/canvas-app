@@ -29,24 +29,7 @@ posts.get('/', async (req, res) => {
 	}
 });
 
-//get posts for logged in user
-posts.get('/user/:username', async (req, res) => {
-	//:username to be removed, to get from session instead.
-	try {
-		const username = req.params.username;
-		const userObj = await User.findOne(
-			{ username: username },
-			{ listOfFriends: 1 }
-		);
-		const searchList = [...userObj.listOfFriends, userObj._id];
-		const allPosts = await Post.find({ username: { $in: searchList } });
-		// console.log(allPosts);
-		res.status(StatusCodes.ACCEPTED).send(allPosts);
-	} catch (err) {
-		console.log(err);
-		res.status(StatusCodes.BAD_REQUEST).send(err);
-	}
-});
+
 
 // Will add in later - for AUTH
 // Request + Cookie -> Session -> req.session
@@ -99,7 +82,7 @@ posts.put('/:id', async (req, res) => {
 		res.status(StatusCodes.FORBIDDEN).send("Likes can't be negative");
 	} else {
 		try {
-			const updatePost = await Post.findByIdAndUpdate(id, req.body);
+			const updatePost = await Post.findByIdAndUpdate(id, req.body, {new: true});
 			if (updatePost === null) {
 				res
 					.status(StatusCodes.NOT_FOUND)

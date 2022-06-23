@@ -18,15 +18,6 @@ export function PostProvider({ children }) {
 		setPosts([...posts.slice(0, pos), original, ...posts.slice(pos + 1)]);
 	};
 
-	const handleLike = (id) => {
-		fetch(`/api/posts/${id}`, { method: 'PUT' })
-			.then((response) => response.json())
-			.then((data) => {
-				// console.log(data);
-				replacePost(data);
-			});
-	};
-
 	const handleDelete = (id) => {
 		fetch(`api/posts/${id}`, { method: 'DELETE' })
 			.then((response) => response.json())
@@ -46,7 +37,7 @@ export function PostProvider({ children }) {
 
 	return (
 		<postContext.Provider
-			value={{ posts, setPosts, handleLike, handleDelete, counter, setCounter }}
+			value={{ posts, setPosts, handleDelete, counter, setCounter }}
 		>
 			{children}
 		</postContext.Provider>
