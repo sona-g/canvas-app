@@ -8,15 +8,15 @@ import Header from '../components/Header';
 import loginContext from '../components/LoginContext';
 
 const MyPosts = () => {
-	const { posts, handleLike, handleDelete, counter, setCounter } =
+	const { posts, handleDelete, counter, setCounter } =
 		useContext(postContext);
 	const { user, setUser } = useContext(loginContext);
 
 	// if (user[0]?._id === posts?.ownerOfPost) {
 	// 	//display all posts by user
 	// }
-	console.log(user);
-	console.log(posts);
+	// console.log(user);
+	// console.log(posts);
 
 	return (
 		<>
@@ -69,13 +69,6 @@ const MyPosts = () => {
 														// setCounter(counter + 1);
 													}}
 												/>
-											</button>
-											<button
-												type="button"
-												className="btn btn-light"
-												// onClick={() => handleLike(post?._id)}
-											>
-												<MdFavoriteBorder />
 											</button>
 										</p>
 									</div>
