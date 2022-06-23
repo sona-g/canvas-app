@@ -19,7 +19,7 @@ function App() {
 							<Route path="/posts" element={<Main />} />
 							<Route path="/posts/new" element={<NewPost />} />
 							<Route path="/posts/:id" element={<Post />} />
-							<Route path="/myposts" element={<MyPosts />} />
+							<Route path="/myPosts" element={<MyPosts />} />
 						</Routes>
 					</BrowserRouter>
 				</PostProvider>

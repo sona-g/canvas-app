@@ -8,9 +8,9 @@ import Header from '../components/Header';
 import loginContext from '../components/LoginContext';
 
 const MyPosts = () => {
-	const { posts, handleDelete, counter, setCounter } =
+	const { posts, handleDelete} =
 		useContext(postContext);
-	const { user, setUser } = useContext(loginContext);
+	const { user} = useContext(loginContext);
 
 	// if (user[0]?._id === posts?.ownerOfPost) {
 	// 	//display all posts by user

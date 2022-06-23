@@ -39,7 +39,7 @@ const Main = () => {
       const index = post.usersLikedList.findIndex((ele) => ele._id === user[0]._id);
       post.usersLikedList.splice(index,1);
     } else {
-		post.usersLikedList.push({name: user[0].name, _id: user[0]._id});
+		post.usersLikedList.push({name: user?.[0]?.name, _id: user?.[0]?._id});
 	} 
 	replacePost(post,postIndex);
   };
@@ -48,10 +48,10 @@ const Main = () => {
 	return (
 		<>
 			<Header />
-			<div className="postContainer" style={{ display: 'flex' }}>
+			<div className="row row-cols-1 row-cols-md-2" style={{ display: 'flex' }}>
 				{posts?.map((post) => {
 					return (
-						<div className="card" style={{ width: '18rem' }} key={post?._id}>
+						<div className="card" style={{ width: '18rem', margin: '2%' }} key={post?._id}>
 							<div className="card-body">
 								<h5 className="card-title" style={{ textAlign: 'left' }}>
 									{post?.ownerOfPost?.name}
