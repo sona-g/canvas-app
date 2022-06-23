@@ -1,16 +1,22 @@
 import React from 'react';
 // import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { MdDeleteOutline} from 'react-icons/md';
+import {
+	MdFavoriteBorder,
+	MdFavorite,
+	MdDeleteOutline,
+	MdEdit,
+} from 'react-icons/md';
 import postContext from '../components/PostContext';
 import { useContext } from 'react';
 import Header from '../components/Header';
 import loginContext from '../components/LoginContext';
+import { useNavigate } from 'react-router-dom';
 
 const MyPosts = () => {
-	const { posts, handleDelete} =
-		useContext(postContext);
-	const { user} = useContext(loginContext);
+	const navigate = useNavigate();
+	const { posts, handleDelete, counter, setCounter } = useContext(postContext);
+	const { user, setUser } = useContext(loginContext);
 
 	// if (user[0]?._id === posts?.ownerOfPost) {
 	// 	//display all posts by user
@@ -63,10 +69,19 @@ const MyPosts = () => {
 										<p className="d-flex justify-content-between">
 											<span style={{ fontSize: '70%' }}>Date/Time</span>
 											<button type="button" className="btn btn-light">
+												<MdEdit
+													onClick={() => {
+														console.log(post?._id);
+														navigate(`/myposts/${post?._id}`, {
+															replace: true,
+														});
+													}}
+												/>
+											</button>
+											<button type="button" className="btn btn-light">
 												<MdDeleteOutline
 													onClick={() => {
 														handleDelete(post?._id);
-														// setCounter(counter + 1);
 													}}
 												/>
 											</button>
