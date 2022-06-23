@@ -36,8 +36,12 @@ const Header = () => {
 
 	return (
 		<div className="NavBar">
-				<img id="logo" src="https://i.imgur.com/dXjWbR1.png" alt="logo" 
-				onClick={() => nav("/posts")}/>
+			<img
+				id="logo"
+				src="https://i.imgur.com/dXjWbR1.png"
+				alt="logo"
+				onClick={() => nav('/posts')}
+			/>
 			<input
 				id="search"
 				name="search"
