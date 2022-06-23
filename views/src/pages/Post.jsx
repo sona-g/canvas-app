@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import postContext from '../components/PostContext';
+import loginContext from '../components/LoginContext';
 import { useContext, useEffect } from 'react';
 import Header from '../components/Header';
 import { useParams } from 'react-router-dom';
 
 const Post = () => {
-	// const { posts, setPosts } = useContext(postContext);
+	//const { posts, setPosts } = useContext(postContext);
+    const { user } = useContext(loginContext);
 	const [posts, setPosts] = useState({});
+    const [comment, setComment] = useState('')
 	const { id } = useParams();
 
 	useEffect(() => {
@@ -15,7 +18,25 @@ const Post = () => {
 			.then((data) => setPosts(data.data));
 	}, []);
 
-	console.log(posts?.commentsArray?.[0]);
+    const handleComment = () => {
+        fetch('/api/comment/', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+                ownerOfComment: user?.[0]?._id,
+				commentText: comment
+			}),
+		})
+			.then((response) => response.json())
+			.then((data) => {console.log(data);
+			});
+        // posts?.commentsArray?.push({ownerOfComment: user?.[0]?._id,
+        //                             commentText: comment})
+        
+    };
+    //setPosts(...posts)
+    console.log(comment);
+	console.log(posts?.commentsArray);
 	return (
 		<div>
 			<Header />
@@ -23,14 +44,14 @@ const Post = () => {
 			<div
 				className="card"
 				style={{ width: '50%', justifyContent: 'flex-start' }}
-				key={posts._id}
+				key={posts?._id}
 			>
 				<div className="card-body">
 					<h5 className="card-title" style={{ textAlign: 'left' }}>
 						{posts?.ownerOfPost?.name}
 					</h5>
 					<img
-						id={posts._id}
+						id={posts?._id}
 						src={posts.image}
 						className="card-img-top"
 						alt={posts.title}
@@ -70,7 +91,7 @@ const Post = () => {
 								return (
 									<>
 										<div className="bg-white p-2" key={post?.ownerOfComment}>
-											<div className="d-flex flex-row user-info">
+											{/* <div className="d-flex flex-row user-info">
 												<img
 													className="rounded-circle"
 													src="https://i.imgur.com/RpzrMR2.jpg"
@@ -83,12 +104,12 @@ const Post = () => {
 													</span>
 													<span className="date text-black-50">Date/ Time</span>
 												</div>
-											</div>
+											</div> */}
 											<div className="mt-2">
-												<p className="comment-text">{post?.commentText}</p>
+												<p className="comment-text">{post?.ownerOfComment} : {post?.commentText}</p>
 											</div>
 										</div>
-										<div className="bg-white">
+										{/* <div className="bg-white">
 											<div className="d-flex flex-row fs-12">
 												<div className="like p-2 cursor">
 													<i className="fa fa-thumbs-o-up"></i>
@@ -103,7 +124,7 @@ const Post = () => {
 													<span className="ml-1">Share</span>
 												</div>
 											</div>
-										</div>
+										</div> */}
 									</>
 								);
 							})}
@@ -115,12 +136,13 @@ const Post = () => {
 										alt=""
 										width="40"
 									/>
-									<textarea className="form-control ml-1 shadow-none textarea"></textarea>
+									<textarea className="form-control ml-1 shadow-none textarea" label="comment" value={comment} onChange={(e) => setComment(e.target.value)}></textarea>
 								</div>
 								<div className="mt-2 text-right">
 									<button
 										className="btn btn-primary btn-sm shadow-none"
 										type="button"
+                                        onClick={handleComment}
 									>
 										Post comment
 									</button>

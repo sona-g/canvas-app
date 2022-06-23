@@ -9,7 +9,7 @@ export function PostProvider({ children }) {
 		fetch('/api/posts')
 			.then((response) => response.json())
 			.then((data) => setPosts(data));
-	}, []);
+	});
 
 	const replacePost = (original) => {
 		const pos = posts.findIndex((post) => post._id === original._id);

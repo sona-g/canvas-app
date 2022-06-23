@@ -7,7 +7,7 @@ import { useContext } from 'react';
 import Header from '../components/Header';
 
 const Main = () => {
-	const { posts, handleLike, handleDelete } = useContext(postContext);
+	const { posts, handleLike } = useContext(postContext);
 	//    console.log(posts);
 
 	return (
