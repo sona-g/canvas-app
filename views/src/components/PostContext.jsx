@@ -33,7 +33,10 @@ export function PostProvider({ children }) {
 			.then((data) => {
 				console.log(data);
 			});
-		setCounter(counter + 1);
+		setTimeout(() => {
+			setCounter(counter + 1);
+		}, 300);
+
 		// setPosts(posts.filter((p) => p._id === id));
 		//should not use counter to re-render
 		//no reason to do another fetch
