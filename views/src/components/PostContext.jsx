@@ -4,12 +4,13 @@ const postContext = createContext();
 
 export function PostProvider({ children }) {
 	const [posts, setPosts] = useState([]);
+	const [counter, setCounter] = useState(0);
 
 	useEffect(() => {
 		fetch('/api/posts')
 			.then((response) => response.json())
 			.then((data) => setPosts(data));
-	}, []);
+	}, [counter]);
 
 	const replacePost = (original) => {
 		const pos = posts.findIndex((post) => post._id === original._id);
@@ -32,10 +33,18 @@ export function PostProvider({ children }) {
 			.then((data) => {
 				console.log(data);
 			});
+		setCounter(counter + 1);
+		// setPosts(posts.filter((p) => p._id === id));
+		//should not use counter to re-render
+		//no reason to do another fetch
+
+		//should not depend
 	};
 
 	return (
-		<postContext.Provider value={{ posts, setPosts, handleLike, handleDelete }}>
+		<postContext.Provider
+			value={{ posts, setPosts, handleLike, handleDelete, counter, setCounter }}
+		>
 			{children}
 		</postContext.Provider>
 	);
