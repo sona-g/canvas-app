@@ -4,10 +4,12 @@ import Header from '../components/Header';
 import { useContext } from 'react';
 import loginContext from '../components/LoginContext';
 import { useNavigate } from 'react-router-dom';
+import postContext from '../components/PostContext';
 
 const NewPost = () => {
 	let navigate = useNavigate();
-	const { user } = useContext(loginContext);
+	const { user, setUser } = useContext(loginContext);
+	const { counter, setCounter } = useContext(postContext);
 	const [imageSrc, setImageSrc] = useState(null);
 	const [title, setTitle] = useState(null);
 	const [desc, setDesc] = useState(null);
@@ -31,11 +33,17 @@ const NewPost = () => {
 			.then((data) => {
 				console.log(data);
 			});
+
+		//need to re-render with REACT
+		setCounter(counter + 1);
 		navigate('/posts', { replace: true });
-		window.location.reload();
+
+		//will eventually fail if continue doing
+		//useContext fundamentally wrong
+		//race condition
 	};
 
-	return (
+return (
 		<>
 			<Header />
 

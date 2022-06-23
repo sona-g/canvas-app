@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import loginContext from './LoginContext';
 import { useContext } from 'react';
@@ -7,6 +7,7 @@ import { useContext } from 'react';
 const Header = () => {
 	const { user } = useContext(loginContext);
 	const [searchQuery, setSearchQuery] = useState('');
+	const nav = useNavigate();
 
 	const handleSearch = (e) => {
 		setSearchQuery(e.target.value);
@@ -35,9 +36,8 @@ const Header = () => {
 
 	return (
 		<div className="NavBar">
-			<Link to="/posts">
-				<img id="logo" src="https://i.imgur.com/dXjWbR1.png" alt="logo" />
-			</Link>
+				<img id="logo" src="https://i.imgur.com/dXjWbR1.png" alt="logo" 
+				onClick={() => nav("/posts")}/>
 			<input
 				id="search"
 				name="search"
@@ -48,6 +48,9 @@ const Header = () => {
 
 			<Link className="NavBarLink" to="/posts/new">
 				Create Post
+			</Link>
+			<Link className="NavBarLink" to="/myposts">
+				My Posts
 			</Link>
 			{/* <h3>Hello, {user[0]?.name}</h3> */}
 		</div>

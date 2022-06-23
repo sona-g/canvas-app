@@ -29,24 +29,7 @@ posts.get('/', async (req, res) => {
 	}
 });
 
-//get posts for logged in user
-posts.get('/user/:username', async (req, res) => {
-	//:username to be removed, to get from session instead.
-	try {
-		const username = req.params.username;
-		const userObj = await User.findOne(
-			{ username: username },
-			{ listOfFriends: 1 }
-		);
-		const searchList = [...userObj.listOfFriends, userObj._id];
-		const allPosts = await Post.find({ username: { $in: searchList } });
-		// console.log(allPosts);
-		res.status(StatusCodes.ACCEPTED).send(allPosts);
-	} catch (err) {
-		console.log(err);
-		res.status(StatusCodes.BAD_REQUEST).send(err);
-	}
-});
+
 
 // Will add in later - for AUTH
 // Request + Cookie -> Session -> req.session
@@ -75,9 +58,9 @@ posts.post('/', async (req, res) => {
 posts.get('/:id', async (req, res) => {
 	const { id } = req.params;
 	try {
-		const selectedPost = await Post.findById(id).
-		populate('usersLikedList','name').
-		populate('ownerOfPost','name');
+		const selectedPost = await Post.findById(id)
+			.populate('usersLikedList', 'name')
+			.populate('ownerOfPost', 'name');
 		if (selectedPost === null) {
 			res
 				.status(StatusCodes.NOT_FOUND)
