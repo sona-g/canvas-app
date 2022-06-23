@@ -1,7 +1,7 @@
 import React from 'react';
 // import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { MdFavoriteBorder, MdFavorite, MdDeleteOutline } from 'react-icons/md';
+import { MdDeleteOutline} from 'react-icons/md';
 import postContext from '../components/PostContext';
 import { useContext } from 'react';
 import Header from '../components/Header';
