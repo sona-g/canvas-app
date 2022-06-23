@@ -35,29 +35,64 @@ const Header = () => {
 	};
 
 	return (
-		<div className="NavBar">
-			<img
-				id="logo"
-				src="https://i.imgur.com/dXjWbR1.png"
-				alt="logo"
-				onClick={() => nav('/posts')}
-			/>
-			<input
-				id="search"
+		<div className="d-inline-flex p-2 bd-highlight">
+		<div className="m-4" style={{marginBottom: "2%"}}>
+    <nav className="navbar navbar-expand-sm navbar-light bg-light">
+        <div className="container-fluid">
+            <a href="/posts" className="navbar-brand" style={{textAlign: 'left', maxWidth: '40%'}}><img style={{maxWidth: '20%'}} src={require('../assets/logo_transparent.png')} alt="canvas"/></a>
+            <button type="button" className="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span className="navbar-toggler-icon"></span>
+            </button>
+            <div id="navbarCollapse" className="collapse navbar-collapse" style={{flexBasis: '100%'}}>
+                <ul className="nav navbar-nav">
+                    <li className="nav-item">
+                        <a href="/posts" className="nav-link">Home</a>
+                    </li>
+                    <li className="nav-item">
+                        <a href="/myPosts" className="nav-link">Profile</a>
+                    </li>
+					<li className="nav-item">
+                        <a href="/posts/new" className="nav-link">Create</a>
+                    </li>
+                </ul>
+				<input id="search"
 				name="search"
 				type="search"
 				placeholder="search for a post"
-				onChange={handleSearch}
-			/>
+				onChange={handleSearch}/>
+                <ul className="nav navbar-nav ms-auto">
+                    <li className="nav-item">
+                        <a href="/" className="nav-link">Admin</a>
+                        {/* <div className="dropdown-menu dropdown-menu-end">
+                            <a href="/" className="dropdown-item">Logout</a>
+                        </div> */}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>   
+	</div>
+	</div>
 
-			<Link className="NavBarLink" to="/posts/new">
-				Create Post
-			</Link>
-			<Link className="NavBarLink" to="/myposts">
-				My Posts
-			</Link>
-			{/* <h3>Hello, {user[0]?.name}</h3> */}
-		</div>
+		//  <div className="NavBar">
+		// 		<img id="logo" src="https://i.imgur.com/dXjWbR1.png" alt="logo" 
+		// 		onClick={() => nav("/posts")}/>
+		// 	<input
+		// 		id="search"
+		// 		name="search"
+		// 		type="search"
+		// 		placeholder="search for a post"
+		// 		onChange={handleSearch}
+		// 	/>
+
+		// 	 <Link className="NavBarLink" to="/posts/new">
+		// 		Create Post
+		// 	</Link>
+		// 	<Link className="NavBarLink" to="/myposts">
+		// 		My Posts
+		// 	</Link>
+		// 	<h3>Hello, {user?.[0]?.name}</h3> 
+		// </div> 
 	);
 };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { Form, Button } from 'react-bootstrap';
 import Header from '../components/Header';
 import { useContext } from 'react';
 import loginContext from '../components/LoginContext';
@@ -48,7 +49,47 @@ return (
 			<Header />
 
 			<div>
-				<form method="post" onSubmit={handleSubmit}>
+			<Form method="post" onSubmit={handleSubmit} style={{ margin: '7%' }}>
+				<h3>CREATE POST</h3>
+				<p htmlFor="image">Image Source:</p>
+				<Form.Group className="mb-3" controlId="imageSrc">
+					<Form.Control
+						input
+						onChange={(event) => setImageSrc(event.target.value)}
+						type="text"
+						name="image"
+						placeholder="input an image source"
+					/>
+				</Form.Group>
+				<p htmlFor="title">Title:</p>
+				<Form.Group className="mb-3" controlId="title">
+					<Form.Control
+						onChange={(event) => setTitle(event.target.value)}
+						type="text"
+						name="title"
+						placeholder="input a title"
+					/>
+				</Form.Group>
+				<p htmlFor="description">Description:</p>
+				<Form.Group className="mb-3" controlId="description">
+				<Form.Control
+						onChange={(event) => setDesc(event.target.value)}
+						name="description"
+						placeholder="type your thoughts here"
+						rows="4"
+						cols="30"
+					/>
+				</Form.Group>
+				<Button
+					className="d-grid gap-2 col-12 mx-auto"
+					variant="warning"
+					size="lg"
+					type="submit"
+				>
+					SUBMIT
+				</Button>
+			</Form>
+				{/* <form method="post" onSubmit={handleSubmit}>
 					<h2>Create Post</h2>
 					<table>
 						<tbody>
@@ -100,7 +141,7 @@ return (
 							</tr>
 						</tbody>
 					</table>
-				</form>
+				</form> */}
 			</div>
 		</>
 	);

@@ -1,7 +1,7 @@
 const express = require('express');
 const { StatusCodes } = require('http-status-codes');
 const comment = express.Router();
-const Comment = require('../models/commentSchema');
+const {Comment} = require('../models/commentSchema');
 
 //routes
 
@@ -29,14 +29,16 @@ comment.get('/', async (req, res) => {
 
 //create - post (add new comment to database, then redirect)
 comment.post('/', async (req, res) => {
-	if (req.body.numOfLikes < 0) {
-		res.status(StatusCodes.FORBIDDEN).send("Likes can't be negative");
-	}
+	// if (req.body.numOfLikes < 0) {
+	// 	res.status(StatusCodes.FORBIDDEN).send("Likes can't be negative");
+	// }
 	try {
-		const newComment = await Comment.create(req.body);
+		await Comment.create(req.body);
 		res
-			.status(StatusCodes.CREATED)
-			.send({ status: 'success', data: newComment });
+		.status(StatusCodes.CREATED)
+		.send({ status: 'success', data: newComment });
+		console.log(newComment)
+		//res.send("success")
 	} catch (error) {
 		res.send(error);
 	}
