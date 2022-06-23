@@ -1,34 +1,35 @@
 import React from 'react';
 // import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { MdFavoriteBorder, MdFavorite } from 'react-icons/md';
+import { MdFavoriteBorder, MdFavorite, MdDeleteOutline } from 'react-icons/md';
 import postContext from '../components/PostContext';
 import { useContext } from 'react';
 import Header from '../components/Header';
 
 const Main = () => {
-	const { posts, handleLike } = useContext(postContext);
+	const { posts, handleLike, handleDelete } = useContext(postContext);
 	//    console.log(posts);
+
 	return (
 		<>
 			<Header />
 			<div className="postContainer" style={{ display: 'flex' }}>
-				{posts.map((post) => {
+				{posts?.map((post) => {
 					return (
-						<div className="card" style={{ width: '18rem' }} key={post._id}>
+						<div className="card" style={{ width: '18rem' }} key={post?._id}>
 							<div className="card-body">
 								<h5 className="card-title" style={{ textAlign: 'left' }}>
 									{post?.ownerOfPost?.name}
 								</h5>
 								<Link
-									to={`/posts/${post._id}`}
+									to={`/posts/${post?._id}`}
 									style={{ color: 'inherit', textDecoration: 'inherit' }}
 								>
 									<img
-										id={post._id}
-										src={post.image}
+										id={post?._id}
+										src={post?.image}
 										className="card-img-top"
-										alt={post.title}
+										alt={post?.title}
 									/>
 								</Link>
 								<div
@@ -42,20 +43,20 @@ const Main = () => {
 											marginBottom: '2%',
 										}}
 									>
-										{post.usersLikedList.length} Likes
+										{post?.usersLikedList?.length} Likes
 									</p>
 									<p style={{ textAlign: 'left' }}>
 										<span style={{ fontWeight: 'bold' }}>
 											{post?.ownerOfPost?.name}
 										</span>
-										: {post.title}
+										: {post?.title}
 									</p>
 									<p className="d-flex justify-content-between">
 										<span style={{ fontSize: '70%' }}>Date/Time</span>
 										<button
 											type="button"
 											className="btn btn-light"
-											onClick={() => handleLike(post._id)}
+											onClick={() => handleLike(post?._id)}
 										>
 											<MdFavoriteBorder />
 										</button>
