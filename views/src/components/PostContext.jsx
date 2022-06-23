@@ -16,9 +16,9 @@ export function PostProvider({ children }) {
 		fetch(`api/posts/${id}`, { method: 'DELETE' })
 			.then((response) => response.json())
 			.then((data) => {
-				console.log(data);
+				const newCount = counter +1;
+				setCounter(newCount);
 			});
-		setCounter(counter + 1);
 		// setPosts(posts.filter((p) => p._id === id));
 		//should not use counter to re-render
 		//no reason to do another fetch
