@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import loginContext from './LoginContext';
 import { useContext } from 'react';
-import logo from "../assets/logo_transparent.png";
 
 const Header = () => {
 	const { user } = useContext(loginContext);
@@ -41,7 +40,7 @@ const Header = () => {
     <nav className="navbar navbar-expand-sm navbar-light bg-light">
         <div className="container-fluid">
             <Link to="/posts" className="navbar-brand" style={{textAlign: 'left', maxWidth: '40%'}}><img style={{maxWidth: '20%'}} 
-			src={logo} alt="canvas"/></Link>
+			src={require('../assets/logo_transparent.png')}  alt="canvas"/></Link>
             <button type="button" className="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span className="navbar-toggler-icon"></span>
             </button>
