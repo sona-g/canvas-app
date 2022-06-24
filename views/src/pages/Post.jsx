@@ -62,16 +62,10 @@ const Post = () => {
 							className="card-text"
 							style={{ justifyContent: 'space-between' }}
 						>
-							<p
-								style={{
-									textAlign: 'left',
-									fontWeight: 'bold',
-									marginBottom: '2%',
-								}}
-							>
-								Liked by {posts?.usersLikedList?.[0]?.name} and{' '}
-								{posts?.usersLikedList?.length - 1} more
-							</p>
+                        <p style={{ textAlign: "left", fontWeight: "bold", marginBottom: "2%" }}>
+                        {posts?.usersLikedList?.length > 1 ? `Liked by ${posts?.usersLikedList?.[0]?.name} and ${posts?.usersLikedList?.length - 1} more` : 
+                        posts?.usersLikedList?.length === 1 ? `Liked by ${posts?.usersLikedList?.[0]?.name}`
+                        : ""}</p>
 							<p style={{ textAlign: 'left' }}>
 								<span style={{ fontWeight: 'bold' }}>
 									{posts?.ownerOfPost?.name}
