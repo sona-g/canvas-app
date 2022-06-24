@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import loginContext from './LoginContext';
 import { useContext } from 'react';
+import logo from "../assets/logo_transparent.png";
 
 const Header = () => {
 	const { user } = useContext(loginContext);
@@ -39,20 +40,21 @@ const Header = () => {
 		<div className="m-4" style={{marginBottom: "2%"}}>
     <nav className="navbar navbar-expand-sm navbar-light bg-light">
         <div className="container-fluid">
-            <a href="/posts" className="navbar-brand" style={{textAlign: 'left', maxWidth: '40%'}}><img style={{maxWidth: '20%'}} src={require('../assets/logo_transparent.png')} alt="canvas"/></a>
+            <Link to="/posts" className="navbar-brand" style={{textAlign: 'left', maxWidth: '40%'}}><img style={{maxWidth: '20%'}} 
+			src={logo} alt="canvas"/></Link>
             <button type="button" className="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span className="navbar-toggler-icon"></span>
             </button>
             <div id="navbarCollapse" className="collapse navbar-collapse" style={{flexBasis: '100%'}}>
                 <ul className="nav navbar-nav">
                     <li className="nav-item">
-                        <a href="/posts" className="nav-link">Home</a>
+                        <Link to="/posts" className="nav-link">Home</Link>
                     </li>
                     <li className="nav-item">
-                        <a href="/myPosts" className="nav-link">Profile</a>
+                        <Link to="/myPosts" className="nav-link">Profile</Link>
                     </li>
 					<li className="nav-item">
-                        <a href="/posts/new" className="nav-link">Create</a>
+                        <Link to="/posts/new" className="nav-link">Create</Link>
                     </li>
                 </ul>
 				<input id="search"
@@ -62,7 +64,7 @@ const Header = () => {
 				onChange={handleSearch}/>
                 <ul className="nav navbar-nav ms-auto">
                     <li className="nav-item">
-                        <a href="/" className="nav-link">Admin</a>
+                        <p className="nav-link">{user[0]?.name}</p>
                         {/* <div className="dropdown-menu dropdown-menu-end">
                             <a href="/" className="dropdown-item">Logout</a>
                         </div> */}
