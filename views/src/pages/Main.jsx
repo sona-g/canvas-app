@@ -44,7 +44,8 @@ const Main = () => {
 	replacePost(post,postIndex);
   };
 
-//   console.log(user);
+console.log(user?.[0]?.name);
+console.log(posts?.ownerOfPost?.name);
 	return (
 		<>
 			<Header />
